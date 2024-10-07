@@ -3,10 +3,11 @@ import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
 
-import tasksRouter from "./routes/tasksRouter.js";
-import authRouter from "./routes/authRouter.js";
+
+
+import nodeRouter from "./routes/nodeRouter.js";
+import edgeRouter from "./routes/edgeRouter.js";
 
 dotenv.config()
 
@@ -17,12 +18,11 @@ const app = express();
 app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser());
 app.use(express.static("public"));
 
 
-app.use("/api/tasks", tasksRouter);
-app.use ("/api/users", authRouter);
+app.use("/api/nodes", nodeRouter);
+app.use ("/api/edges", edgeRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
