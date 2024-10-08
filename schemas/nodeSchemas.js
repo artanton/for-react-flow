@@ -27,5 +27,5 @@ data:Joi.object({
 });
 
 export const pictureSchema = Joi.object({
-  avatarURL: Joi.string().regex(/\.(jpg|jpeg|png)$/i),
+  fileURL: Joi.string().regex(/\.(jpg|jpeg|png)$/i),
 });

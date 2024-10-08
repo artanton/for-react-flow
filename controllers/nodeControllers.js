@@ -43,6 +43,7 @@ const updatePicture = async (req, res) => {
     
     const { id } = req.params;
     const { path: oldPath, filename } = req.file;
+    
   
     if (!req.file) {
       throw HttpError(401, "There is no data to update");
