@@ -8,6 +8,7 @@ import {
 } from "../schemas/nodeSchemas.js";
 import validateBody from "../decorators/validateBody.js";
 import isValidId from "../middlewares/isValidId.js";
+import upload from "../middlewares/upload.js";
 
 
 const nodeRouter = express.Router();
@@ -35,9 +36,11 @@ nodeRouter.patch(
 );
 
 nodeRouter.put(
-  "/id",
+  "/:id",
   validateBody(pictureSchema),
-)
+  upload.single("fileURL"),
+  nodeController.updatePicture
+);
 
 nodeRouter.delete("/:id", nodeController.deleteNode);
 

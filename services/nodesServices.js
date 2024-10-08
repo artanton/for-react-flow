@@ -33,24 +33,26 @@ return result;}
 
 export const pictureUpdate = async (data) => {
   const { id, oldPath, filename } = data;
- 
-  const picURL = await Node.findById({_id:id}).data.fileURL;
-
+  
   const image = await Jimp.read(oldPath);
   image.resize(480, 480).write(oldPath);
-
+  
   const newPath = path.join(picPath, filename);
-
+  
   await fs.rename(oldPath, newPath);
-  const newPic = path.join("avatars", filename);
 
+  const newPic = path.join("pictures", filename);
   
-    const oldPic = path.join(toDelPath, picURL);
+  // const picURL = await Node.findOne({id}).data.fileURL;
+  // console.log(picURL);
+  // if(picURL){
+  //   const oldPic = path.join(toDelPath, picURL);
 
-    await fs.rm(oldPic);
-  
+  //   await fs.rm(oldPic);
+  // };
 
-  await updateNode({ id }, { newPic });
+
+  await Node.findOneAndUpdate({ id }, {'data.fileURL': newPic });
 
   return { newPic };
 };
