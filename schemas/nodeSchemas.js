@@ -1,10 +1,11 @@
 import Joi from "joi";
 
 export const createNodeSchema = Joi.object({
-  id:Joi.string().required(),
+  id: Joi.string().required(),
   type: Joi.string().required(),
   data: Joi.object({
-    label: Joi.string().required(),
+    label: Joi.string(),
+    fileURL: Joi.string(),
   }),
 
   position: Joi.object({
@@ -16,14 +17,15 @@ export const createNodeSchema = Joi.object({
 });
 
 export const updateNodeSchema = Joi.object({
+  data: Joi.object({
+    label: Joi.string(),
+    fileURL: Joi.string(),
+  }),
   position: Joi.object({
     x: Joi.number(),
     y: Joi.number(),
   }),
-data:Joi.object({
-  label: Joi.string(), 
-}),
-  
+  type: Joi.string(),
 });
 
 export const pictureSchema = Joi.object({

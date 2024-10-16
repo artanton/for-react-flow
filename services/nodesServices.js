@@ -5,6 +5,7 @@ import fs from "fs/promises";
 import path from "path";
 import Jimp from "jimp";
 import {listEdges} from "./edgesServices.js";
+import HttpError from "../helpers/HttpError.js";
 
 const picPath = path.resolve("public", "pictures");
 const toDelPath = path.resolve("public");
@@ -34,8 +35,12 @@ return result;}
 export const pictureUpdate = async (data) => {
   const { id, oldPath, filename } = data;
   
+  const node = await Node.findOne({id}); 
+  if(!node){
+    throw HttpError(404, 'Not found');
+  }
   const image = await Jimp.read(oldPath);
-  image.resize(480, 480).write(oldPath);
+  // image.resize(480, 480).write(oldPath);
   
   const newPath = path.join(picPath, filename);
   
@@ -43,18 +48,31 @@ export const pictureUpdate = async (data) => {
 
   const newPic = path.join("pictures", filename);
   
-  // const picURL = await Node.findOne({id}).data.fileURL;
-  // console.log(picURL);
-  // if(picURL){
-  //   const oldPic = path.join(toDelPath, picURL);
 
-  //   await fs.rm(oldPic);
-  // };
+    
+  if(node.data.fileURL){ 
+    const oldPic = path.join(toDelPath, node.data.fileURL);
+
+    await fs.rm(oldPic);}
 
 
   await Node.findOneAndUpdate({ id }, {'data.fileURL': newPic });
 
   return { newPic };
+};
+
+export const removePicture = async (id)=>{
+  const node = await Node.findOne({id}); 
+  if(!node){
+    throw HttpError(404, 'Not found');
+  }
+  if(node.data.fileURL){ 
+    const oldPic = path.join(toDelPath, node.data.fileURL);
+
+    await fs.rm(oldPic);}
+    
+    await Node.findOneAndUpdate({ id }, {'data.fileURL': ""});
+
 };
 
 export const removeNode = async(id)=> {  

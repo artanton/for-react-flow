@@ -39,15 +39,18 @@ if (!result){
 res.json(result);
 };
 
-const updatePicture = async (req, res) => {
-    
+const updatePicture = async (req, res) => {    
+   
     const { id } = req.params;
-    const { path: oldPath, filename } = req.file;
-    
-  
+   
     if (!req.file) {
-      throw HttpError(401, "There is no data to update");
+    //   throw HttpError(400, "There is no data to update");
+    console.log(id);
+    await nodeService.removePicture(id);
+      return res.json({message: "Image deleted"});
     }
+    const { path: oldPath, filename } = req.file;
+  
   
     const data = { id,  oldPath, filename };
   
