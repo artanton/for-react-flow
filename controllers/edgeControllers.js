@@ -20,7 +20,7 @@ const updateEdge = async (req, res) => {
    const { id } = req.params;
 
   const result = await edgeService.updateEdgeById(
-    id,
+    {id:id},
     data
   );
   if (!result) {

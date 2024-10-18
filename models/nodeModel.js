@@ -10,6 +10,11 @@ const nodeSchema = new Schema({
     type: String,
     required: [true, 'Node has no "type" field'],
   },
+  nodeColor: {
+    type: String,
+   
+  },
+  
   data:{
     label:{ type: String},
     fileURL: {type: String},

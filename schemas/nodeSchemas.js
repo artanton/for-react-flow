@@ -14,7 +14,9 @@ export const createNodeSchema = Joi.object({
   }),
   selected: Joi.boolean().required(),
   dragging: Joi.boolean().required(),
+  nodeColor: Joi.string().required(),
 });
+
 
 export const updateNodeSchema = Joi.object({
   data: Joi.object({
@@ -26,6 +28,7 @@ export const updateNodeSchema = Joi.object({
     y: Joi.number(),
   }),
   type: Joi.string(),
+  nodeColor: Joi.string(),
 });
 
 export const pictureSchema = Joi.object({
